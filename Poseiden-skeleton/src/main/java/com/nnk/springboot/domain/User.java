@@ -1,17 +1,26 @@
 package com.nnk.springboot.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+
+/*password
+(at least one uppercase letter
+        least one number, and one symbol)*/
+
 
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     @NotBlank(message = "Username is mandatory")
     private String username;
     @NotBlank(message = "Password is mandatory")
+    @Length(min = 8)
     private String password;
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
