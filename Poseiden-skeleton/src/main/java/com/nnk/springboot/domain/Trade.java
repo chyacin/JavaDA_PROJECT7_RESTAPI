@@ -34,6 +34,9 @@ public class Trade {
     String sourceListId;
     String side;
 
+    public Trade(String account, String type) {
+    }
+
     public Integer getTradeId() {
         return tradeId;
     }

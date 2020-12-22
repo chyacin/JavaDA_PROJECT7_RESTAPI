@@ -6,11 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-/*password
-(at least one uppercase letter
-        least one number, and one symbol)*/
-
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -21,11 +16,30 @@ public class User {
     private String username;
     @NotBlank(message = "Password is mandatory")
     @Length(min = 8)
+    @Pattern(regexp = "(.*[A-Z].*)", message = "Password must have at least one uppercase character")
+    @Pattern(regexp ="(.*[0-9].*)", message = "Password must have at least one number")
+    @Pattern(regexp = "(.*[@,#,$,%].*$)", message ="Password must have at least one special character among @#$%")
     private String password;
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
     @NotBlank(message = "Role is mandatory")
     private String role;
+
+    public User() {
+    }
+
+    public User(Integer id, @NotBlank(message = "Username is mandatory") String username,
+                @NotBlank(message = "Password is mandatory") @Length(min = 8)
+                @Pattern(regexp = "(.*[A-Z].*)", message = "Password must have at least one uppercase character")
+                @Pattern(regexp = "(.*[0-9].*)", message = "Password must have at least one number") @Pattern(regexp = "(.*[@,#,$,%].*$)",
+                        message = "Password must have at least one special character among @#$%") String password, @NotBlank(message = "FullName is mandatory")
+                        String fullname, @NotBlank(message = "Role is mandatory") String role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullname = fullname;
+        this.role = role;
+    }
 
     public Integer getId() {
         return id;
