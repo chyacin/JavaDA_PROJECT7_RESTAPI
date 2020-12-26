@@ -16,9 +16,9 @@ public class User {
     private String username;
     @NotBlank(message = "Password is mandatory")
     @Length(min = 8)
-    @Pattern(regexp = "(.*[A-Z].*)", message = "Password must have at least one uppercase character")
-    @Pattern(regexp ="(.*[0-9].*)", message = "Password must have at least one number")
-    @Pattern(regexp = "(.*[@,#,$,%].*$)", message ="Password must have at least one special character among @#$%")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$", message = "Password must have at least one uppercase character [A-Z]," +
+            " it must contain at least one lowercase character [a-z], it must contain at least one special character like ! @ # & ( )," +
+            " it must contain a length of at least 8 characters and a maximum of 20 characters, it must contain at least one digit [0-9] ")
     private String password;
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
@@ -30,10 +30,13 @@ public class User {
 
     public User(Integer id, @NotBlank(message = "Username is mandatory") String username,
                 @NotBlank(message = "Password is mandatory") @Length(min = 8)
-                @Pattern(regexp = "(.*[A-Z].*)", message = "Password must have at least one uppercase character")
-                @Pattern(regexp = "(.*[0-9].*)", message = "Password must have at least one number") @Pattern(regexp = "(.*[@,#,$,%].*$)",
-                        message = "Password must have at least one special character among @#$%") String password, @NotBlank(message = "FullName is mandatory")
-                        String fullname, @NotBlank(message = "Role is mandatory") String role) {
+                @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",
+                        message = "Password must have at least one uppercase character [A-Z]," +
+                                " it must contain at least one lowercase character [a-z]," +
+                                " it must contain at least one special character like ! @ # & ( )," +
+                                " it must contain a length of at least 8 characters and a maximum of 20 characters, " +
+                                "it must contain at least one digit [0-9] ") String password,
+                @NotBlank(message = "FullName is mandatory") String fullname, @NotBlank(message = "Role is mandatory") String role) {
         this.id = id;
         this.username = username;
         this.password = password;
