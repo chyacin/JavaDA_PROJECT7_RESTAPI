@@ -1,10 +1,11 @@
 package com.nnk.springboot.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 import java.sql.Date;
 import java.sql.Timestamp;
 
@@ -15,30 +16,101 @@ public class BidList {
 
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "bid_list_id")
     Integer BidListId;
+
+    @Column(name = "account")
+    @Size(max = 30)
     @NotBlank(message = "Account is mandatory")
     String account;
+
+    @Column(name = "type")
+    @Size(max = 30)
     @NotBlank(message = "Type is mandatory")
     String type;
+
+    @PositiveOrZero
+    @NotNull
+    @Column(name = "bid_quantity")
     Double bidQuantity;
+
+    @PositiveOrZero
+    @NotNull
+    @Column(name = "ask_quantity")
     Double askQuantity;
+
+    @PositiveOrZero
+    @NotNull
+    @Column(name = "bid")
     Double bid;
+
+    @PositiveOrZero
+    @NotNull
+    @Column(name = "ask")
     Double ask;
+
+    @Column(name = "benchmark")
+    @Size(max = 125)
     String benchmark;
+
+    @CreationTimestamp
+    @DateTimeFormat(pattern="yyyy.MM.dd")
+    @Column(name = "bid_list_date")
     Timestamp bidListDate;
+
+    @Column(name = "commentary")
+    @Size(max = 125)
     String commentary;
+
+    @Column(name = "security")
+    @Size(max = 125)
     String security;
+
+    @Column(name = "status")
+    @Size(max = 10)
     String status;
+
+    @Column(name = "trader")
+    @Size(max = 125)
     String trader;
+
+    @Column(name = "book")
+    @Size(max = 125)
     String book;
+
+    @Column(name = "creation_name")
+    @Size(max = 125)
     String creationName;
+
+    @CreationTimestamp
+    @DateTimeFormat(pattern="yyyy.MM.dd")
+    @Column(name = "creation_date")
     Timestamp creationDate;
+
+    @Column(name = "revision_name")
+    @Size(max = 125)
     String revisionName;
+
+    @CreationTimestamp
+    @DateTimeFormat(pattern="yyyy.MM.dd")
+    @Column(name = "revision_date")
     Timestamp revisionDate;
+
+    @Column(name = "deal_name")
+    @Size(max = 125)
     String dealName;
+
+    @Column(name = "deal_type")
+    @Size(max = 125)
     String dealType;
+
+    @Column(name = "source_list_id")
+    @Size(max = 125)
     String sourceListId;
+
+    @Column(name = "side")
+    @Size(max = 125)
     String side;
 
     public BidList(String account, String type, double bidQuantity) {

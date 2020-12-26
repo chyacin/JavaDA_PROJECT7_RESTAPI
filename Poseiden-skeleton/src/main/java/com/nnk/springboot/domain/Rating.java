@@ -3,6 +3,8 @@ package com.nnk.springboot.domain;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Entity
@@ -12,11 +14,25 @@ public class Rating {
 
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "id")
     Integer id;
+
+    @Column(name = "moods_rating")
+    @Size(max = 125)
     String moodysRating;
+
+    @Column(name = "sand_p_rating")
+    @Size(max = 125)
     String sandPRating;
+
+    @Column(name = "fitch_rating")
+    @Size(max = 125)
     String fitchRating;
+
+    @Column(name = "order_number")
+    @NotNull
+    @PositiveOrZero
     Integer orderNumber;
 
     public Rating(String moodysRating, String sandPRating, String fitchRating, int orderNumber) {

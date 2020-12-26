@@ -1,7 +1,10 @@
 package com.nnk.springboot.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Entity
@@ -10,13 +13,32 @@ public class RuleName {
     // TODO: Map columns in data table RULENAME with corresponding java fields
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    @Column(name = "id")
     Integer id;
+
+    @Column(name = "name")
+    @Size(max = 125)
     String name;
+
+    @Column(name = "description")
+    @Size(max = 125)
     String description;
+
+    @Column(name = "json")
+    @Size(max = 125)
     String json;
+
+    @Column(name = "template")
+    @Size(max = 512)
     String template;
+
+    @Column(name = "sql_str")
+    @Size(max = 125)
     String sqlStr;
+
+    @Column(name = "sql_part")
+    @Size(max = 125)
     String sqlPart;
 
     public RuleName(String name, String description, String json, String template, String sql, String sqlPart) {
