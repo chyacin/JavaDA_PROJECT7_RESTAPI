@@ -19,6 +19,9 @@ public class Rating {
     String fitchRating;
     Integer orderNumber;
 
+    public Rating(String moodysRating, String sandPRating, String fitchRating, int orderNumber) {
+    }
+
     public Integer getId() {
         return id;
     }
