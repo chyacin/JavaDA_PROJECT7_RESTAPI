@@ -19,6 +19,9 @@ public class RuleName {
     String sqlStr;
     String sqlPart;
 
+    public RuleName(String name, String description, String json, String template, String sql, String sqlPart) {
+    }
+
     public Integer getId() {
         return id;
     }
