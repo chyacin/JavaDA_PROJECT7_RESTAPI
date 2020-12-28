@@ -7,7 +7,7 @@ import java.util.List;
 public interface BidListService {
 
 
-    public BidList createBidList(BidList bidList);
+    public BidList saveBidList(BidList bidList);
     public BidList findBidListById(int id);
     List<BidList> findAllBidList();
     public void updateBidList(BidList bidList);

@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface BidListRepository extends JpaRepository<BidList, Integer> {
 
-    List<BidList> findAll(int BidListId);
 }
 

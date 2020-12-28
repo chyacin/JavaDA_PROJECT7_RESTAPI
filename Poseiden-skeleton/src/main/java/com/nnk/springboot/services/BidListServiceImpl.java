@@ -16,7 +16,7 @@ public class BidListServiceImpl implements  BidListService{
     private BidListRepository bidListRepository;
 
     @Override
-    public BidList createBidList(BidList bidList) {
+    public BidList saveBidList(BidList bidList) {
         return bidListRepository.save(bidList);
     }
 
@@ -42,28 +42,6 @@ public class BidListServiceImpl implements  BidListService{
     @Override
     public void updateBidList(BidList bidList) {
         BidList updateBidList = findBidListById(bidList.getBidListId());
-        updateBidList.setBid(bidList.getBid());
-        updateBidList.setBidListId(bidList.getBidListId());
-        updateBidList.setBidListDate(bidList.getBidListDate());
-        updateBidList.setAccount(bidList.getAccount());
-        updateBidList.setBidQuantity(bidList.getBidQuantity());
-        updateBidList.setType(bidList.getType());
-        updateBidList.setAskQuantity(bidList.getAskQuantity());
-        updateBidList.setAsk(bidList.getAsk());
-        updateBidList.setBenchmark(bidList.getBenchmark());
-        updateBidList.setCommentary(bidList.getCommentary());
-        updateBidList.setSecurity(bidList.getSecurity());
-        updateBidList.setStatus(bidList.getStatus());
-        updateBidList.setTrader(bidList.getTrader());
-        updateBidList.setBook(bidList.getBook());
-        updateBidList.setCreationName(bidList.getCreationName());
-        updateBidList.setCreationDate(bidList.getCreationDate());
-        updateBidList.setRevisionName(bidList.getRevisionName());
-        updateBidList.setRevisionDate(bidList.getRevisionDate());
-        updateBidList.setDealName(bidList.getDealName());
-        updateBidList.setDealType(bidList.getDealType());
-        updateBidList.setSourceListId(bidList.getSourceListId());
-        updateBidList.setSide(bidList.getSide());
         bidListRepository.save(updateBidList);
 
 
