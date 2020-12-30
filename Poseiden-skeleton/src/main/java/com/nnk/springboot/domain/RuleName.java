@@ -41,6 +41,9 @@ public class RuleName {
     @Size(max = 125)
     String sqlPart;
 
+    public RuleName() {
+    }
+
     public RuleName(String name, String description, String json, String template, String sql, String sqlPart) {
     }
 

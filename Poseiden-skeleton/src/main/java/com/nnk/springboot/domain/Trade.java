@@ -110,6 +110,9 @@ public class Trade {
     @Size(max = 125)
     String side;
 
+    public Trade() {
+    }
+
     public Trade(String account, String type) {
     }
 

@@ -35,6 +35,9 @@ public class Rating {
     @PositiveOrZero
     Integer orderNumber;
 
+    public Rating() {
+    }
+
     public Rating(String moodysRating, String sandPRating, String fitchRating, int orderNumber) {
     }
 

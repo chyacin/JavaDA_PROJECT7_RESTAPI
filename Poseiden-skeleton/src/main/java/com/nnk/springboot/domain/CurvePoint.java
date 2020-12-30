@@ -47,6 +47,9 @@ public class CurvePoint {
     @Column(name = "creation_date")
     Timestamp creationDate;
 
+    public CurvePoint() {
+    }
+
     public CurvePoint(int curveId, double term, double value) {
     }
 

@@ -113,6 +113,9 @@ public class BidList {
     @Size(max = 125)
     String side;
 
+    public BidList() {
+    }
+
     public BidList(String account, String type, double bidQuantity) {
     }
 
