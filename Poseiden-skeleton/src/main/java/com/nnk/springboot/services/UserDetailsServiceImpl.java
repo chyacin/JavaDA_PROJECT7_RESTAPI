@@ -13,8 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -29,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
        User userByUsername = userRepository.findUserByUsername(username);
 
        if(userByUsername == null) {
-           throw new UsernameNotFoundException("Could not find userByUsername");
+           throw new UsernameNotFoundException("Could not find user By Username");
        }
        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(userByUsername.getRole());
 
