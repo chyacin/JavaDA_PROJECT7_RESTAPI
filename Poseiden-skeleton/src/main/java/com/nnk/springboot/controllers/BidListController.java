@@ -39,7 +39,7 @@ public class BidListController {
     private final List<BidList> bidLists = new ArrayList<>();
 
 
-    @RequestMapping("/bidList/list")
+    @RequestMapping("bidList/list")
     public String home(@AuthenticationPrincipal UserDetails username, Model model) {
         // TODO: call service find all bids to show to the view
 
@@ -50,19 +50,18 @@ public class BidListController {
             model.addAttribute("bidList", bidListService.findAllBidList());
         }
 
-        for (BidList bidList : bidLists) {
-            log.info("BidList id: " + bidList.getBidListId() +
-                    "BidList date " + bidList.getBidListDate());
-        }
+            log.info("Total Bids in List: " + bidLists.size());
+
+
         return "bidList/list";
     }
 
-    @GetMapping("/bidList/add")
+    @GetMapping("bidList/add")
     public String addBidForm(BidList bid) {
         return "bidList/add";
     }
 
-    @PostMapping("/bidList/validate")
+    @PostMapping("bidList/validate")
     public String validate(@AuthenticationPrincipal UserDetails username, @Valid BidList bid, BindingResult result, Model model) {
         // TODO: check data valid and save to db, after saving return bid list
 
@@ -81,21 +80,18 @@ public class BidListController {
         }
         if (result.hasErrors()) {
             result.reject("Please enter the correct data");
-            log.info("Account error : " + bid.getAccount(), "Type error : " + bid.getType(),
-                    "Bid quantity error: " + bid.getBidQuantity());
+            log.info("errors : " + result.getAllErrors());
         }
         return "bidList/add";
     }
 
-    @GetMapping("/bidList/update/{id}")
+    @GetMapping("bidList/update/{id}")
     public String showUpdateForm(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, Model model) {
         // TODO: get Bid by Id and to model then show to the form
 
-        String loggedInUsername = username.getUsername(); // get logged in username
-        User loggedInUser = userService.findUserByUsername(loggedInUsername);
         BidList bidList = bidListService.findBidListById(id);
 
-        if (loggedInUser != null && bidList != null) {
+        if (bidList != null) {
             model.addAttribute("bidList", bidList);
 
             for (BidList bid : bidLists){
@@ -108,15 +104,13 @@ public class BidListController {
         return "redirect:/bidList/list";
     }
 
-    @PostMapping("/bidList/update/{id}")
+    @PostMapping("bidList/update/{id}")
     public String updateBid(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, @Valid BidList bidList,
                             BindingResult result, Model model) {
         // TODO: check required fields, if valid call service to update Bid and return list Bid
 
-        String loggedInUsername = username.getUsername(); // get logged in username
-        User loggedInUser = userService.findUserByUsername(loggedInUsername);
 
-        if (loggedInUser != null && !result.hasErrors()) {
+        if (!result.hasErrors()) {
 
             BidList bidListById = bidListService.findBidListById(id);
             bidListById.setAccount(bidList.getAccount());
@@ -135,16 +129,18 @@ public class BidListController {
         return "bidList/list";
     }
 
-    @GetMapping("/bidList/delete/{id}")
+    @GetMapping("bidList/delete/{id}")
     public String deleteBid(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, Model model) {
         // TODO: Find Bid by Id and delete the bid, return to Bid list
 
-        String loggedInUsername = username.getUsername(); // get logged in username
-        User loggedInUser = userService.findUserByUsername(loggedInUsername);
         BidList bidListById = bidListService.findBidListById(id);
 
-        if (loggedInUser != null && bidListById != null) {
-            bidLists.remove(bidListById);
+        if (bidListById != null) {
+          try {
+              bidLists.remove(bidListById);
+          }catch (Exception e){
+              System.out.println("error with deleting bid");
+          }
             log.info("Deleted BidList" + bidListById.toString());
             return "redirect:/bidList/list";
         }
