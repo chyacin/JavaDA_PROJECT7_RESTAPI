@@ -1,4 +1,4 @@
-package com.nnk.springboot.security;
+package com.nnk.springboot.config;
 
 import com.nnk.springboot.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +34,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) throws DeleteException {
         auth.authenticationProvider(authenticationProvider());
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) throws DeleteException {
         web.ignoring()
                 .antMatchers("/static/**");
     }
@@ -47,8 +47,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                //Allow static assets to be loaded without login
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/fonts/**").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
                 //Allow public login
-                .antMatchers("/login").permitAll()
+                .antMatchers("/app/login").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login-error").permitAll()
                 .antMatchers("/error").permitAll()
@@ -57,10 +62,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/app/login")
                 //This needs to be / to load the landing page
                 .defaultSuccessUrl("/", true)
-                .failureUrl("/login?error=true")
+                .failureUrl("/app/login?error=true")
                 .and()
                 .exceptionHandling().accessDeniedPage("/403");
 
