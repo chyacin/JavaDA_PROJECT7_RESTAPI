@@ -31,22 +31,18 @@ public class BidList {
     String type;
 
     @PositiveOrZero
-    @NotNull
     @Column(name = "bid_quantity")
     Double bidQuantity;
 
     @PositiveOrZero
-    @NotNull
     @Column(name = "ask_quantity")
     Double askQuantity;
 
     @PositiveOrZero
-    @NotNull
     @Column(name = "bid")
     Double bid;
 
     @PositiveOrZero
-    @NotNull
     @Column(name = "ask")
     Double ask;
 
@@ -55,7 +51,7 @@ public class BidList {
     String benchmark;
 
     @CreationTimestamp
-    @DateTimeFormat(pattern="yyyy.MM.dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "bid_list_date")
     Timestamp bidListDate;
 
@@ -84,7 +80,7 @@ public class BidList {
     String creationName;
 
     @CreationTimestamp
-    @DateTimeFormat(pattern="yyyy.MM.dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "creation_date")
     Timestamp creationDate;
 
@@ -93,7 +89,7 @@ public class BidList {
     String revisionName;
 
     @CreationTimestamp
-    @DateTimeFormat(pattern="yyyy.MM.dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "revision_date")
     Timestamp revisionDate;
 

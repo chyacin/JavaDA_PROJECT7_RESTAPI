@@ -31,7 +31,6 @@ public class Rating {
     String fitchRating;
 
     @Column(name = "order_number")
-    @NotNull
     @PositiveOrZero
     Integer orderNumber;
 

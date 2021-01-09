@@ -32,22 +32,18 @@ public class Trade {
     String type;
 
     @PositiveOrZero
-    @NotNull
     @Column(name = "buy_quantity")
     Double buyQuantity;
 
     @PositiveOrZero
-    @NotNull
     @Column(name = "sell_quantity")
     Double sellQuantity;
 
     @PositiveOrZero
-    @NotNull
     @Column(name = "buy_price")
     Double buyPrice;
 
     @PositiveOrZero
-    @NotNull
     @Column(name = "sell_price")
     Double sellPrice;
 

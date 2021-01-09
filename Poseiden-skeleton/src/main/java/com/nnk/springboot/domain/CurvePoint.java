@@ -23,7 +23,6 @@ public class CurvePoint {
     Integer id;
 
     @NotBlank(message = "Curve Id must not be null")
-    @NotNull
     @PositiveOrZero
     @Column(name = "curve_id")
     Integer curveId;
@@ -34,11 +33,9 @@ public class CurvePoint {
     @DateTimeFormat(pattern="yyyy.MM.dd")
     Timestamp asOfDate;
 
-    @NotNull
     @Column(name = "term")
     Double term;
 
-    @NotNull
     @Column(name = "value")
     Double value;
 
