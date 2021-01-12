@@ -65,6 +65,12 @@ public class BidListController {
     public String validate(@AuthenticationPrincipal UserDetails username, @Valid BidList bid, BindingResult result, Model model) {
         // TODO: check data valid and save to db, after saving return bid list
 
+
+        if (result.hasErrors()) {
+           // result.reject("Please enter the correct data");
+            log.info("errors : " + result.getAllErrors());
+            return "bidList/add";
+        }
         String loggedInUsername = username.getUsername(); // get logged in username
         User loggedInUser = userService.findUserByUsername(loggedInUsername);
 
@@ -78,10 +84,7 @@ public class BidListController {
 
             return "redirect:/bidList/list";
         }
-        if (result.hasErrors()) {
-            result.reject("Please enter the correct data");
-            log.info("errors : " + result.getAllErrors());
-        }
+
         return "bidList/add";
     }
 

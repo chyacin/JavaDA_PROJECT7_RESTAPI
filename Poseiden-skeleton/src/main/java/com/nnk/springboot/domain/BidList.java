@@ -17,7 +17,7 @@ public class BidList {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "bid_list_id")
+    @Column(name = "BidListId")
     Integer BidListId;
 
     @Column(name = "account")
@@ -31,11 +31,11 @@ public class BidList {
     String type;
 
     @PositiveOrZero
-    @Column(name = "bid_quantity")
+    @Column(name = "bidQuantity")
     Double bidQuantity;
 
     @PositiveOrZero
-    @Column(name = "ask_quantity")
+    @Column(name = "askQuantity")
     Double askQuantity;
 
     @PositiveOrZero
@@ -52,7 +52,7 @@ public class BidList {
 
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Column(name = "bid_list_date")
+    @Column(name = "bidListDate")
     Timestamp bidListDate;
 
     @Column(name = "commentary")
@@ -75,33 +75,33 @@ public class BidList {
     @Size(max = 125)
     String book;
 
-    @Column(name = "creation_name")
+    @Column(name = "creationName")
     @Size(max = 125)
     String creationName;
 
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Column(name = "creation_date")
+    @Column(name = "creationDate")
     Timestamp creationDate;
 
-    @Column(name = "revision_name")
+    @Column(name = "revisionName")
     @Size(max = 125)
     String revisionName;
 
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    @Column(name = "revision_date")
+    @Column(name = "revisionDate")
     Timestamp revisionDate;
 
-    @Column(name = "deal_name")
+    @Column(name = "dealName")
     @Size(max = 125)
     String dealName;
 
-    @Column(name = "deal_type")
+    @Column(name = "dealType")
     @Size(max = 125)
     String dealType;
 
-    @Column(name = "source_list_id")
+    @Column(name = "sourceListId")
     @Size(max = 125)
     String sourceListId;
 
