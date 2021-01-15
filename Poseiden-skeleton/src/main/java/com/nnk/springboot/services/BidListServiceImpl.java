@@ -42,9 +42,13 @@ public class BidListServiceImpl implements  BidListService{
     @Override
     public void updateBidList(BidList bidList) {
         BidList updateBidList = findBidListById(bidList.getBidListId());
-        bidListRepository.save(updateBidList);
+        if(updateBidList != null) {
+            updateBidList.setBidQuantity(bidList.getBidQuantity());
+            updateBidList.setAccount(bidList.getAccount());
+            updateBidList.setType(bidList.getType());
+            bidListRepository.save(updateBidList);
 
-
+        }
     }
 
     public void deleteBidList(int id){
