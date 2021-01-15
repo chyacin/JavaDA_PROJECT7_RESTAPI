@@ -24,13 +24,13 @@ public class CurvePoint {
 
     @NotBlank(message = "Curve Id must not be null")
     @PositiveOrZero
-    @Column(name = "curve_id")
+    @Column(name = "curveId")
     Integer curveId;
 
     @CreationTimestamp
     @FutureOrPresent
-    @Column(name = "as_of_date")
-    @DateTimeFormat(pattern="yyyy.MM.dd")
+    @Column(name = "asOfDate")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     Timestamp asOfDate;
 
     @Column(name = "term")
@@ -40,8 +40,8 @@ public class CurvePoint {
     Double value;
 
     @CreationTimestamp
-    @DateTimeFormat(pattern="yyyy.MM.dd")
-    @Column(name = "creation_date")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @Column(name = "creationDate")
     Timestamp creationDate;
 
     public CurvePoint() {

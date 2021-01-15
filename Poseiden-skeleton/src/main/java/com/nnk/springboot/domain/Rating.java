@@ -18,19 +18,19 @@ public class Rating {
     @Column(name = "id")
     Integer id;
 
-    @Column(name = "moods_rating")
+    @Column(name = "moodsRating")
     @Size(max = 125)
     String moodysRating;
 
-    @Column(name = "sand_p_rating")
+    @Column(name = "sandPRating")
     @Size(max = 125)
     String sandPRating;
 
-    @Column(name = "fitch_rating")
+    @Column(name = "fitchRating")
     @Size(max = 125)
     String fitchRating;
 
-    @Column(name = "order_number")
+    @Column(name = "orderNumber")
     @PositiveOrZero
     Integer orderNumber;
 

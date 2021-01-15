@@ -33,11 +33,11 @@ public class RuleName {
     @Size(max = 512)
     String template;
 
-    @Column(name = "sql_str")
+    @Column(name = "sqlStr")
     @Size(max = 125)
     String sqlStr;
 
-    @Column(name = "sql_part")
+    @Column(name = "sqlPart")
     @Size(max = 125)
     String sqlPart;
 
