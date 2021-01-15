@@ -67,7 +67,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/", true)
                 .failureUrl("/app/login?error=true")
                 .and()
-                .exceptionHandling().accessDeniedPage("/403");
+                .logout()
+                .logoutUrl("/app-logout")
+                .logoutSuccessUrl("/app/login")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .permitAll()
+                .and()
+                .exceptionHandling().accessDeniedPage("/app/error");
 
     }
 
