@@ -79,21 +79,4 @@ public class UserController {
         return "redirect:/user/list";
     }
 
-
-    /**
-     * The controller method that logs us out when user wants to
-     * @param request this is a request scoped object injected for us which performs the request
-     * @param response this is a request scoped object injected for us which performs the response
-     * @return String which contains the url page we redirected to.
-     */
-    @GetMapping("/app-logout")
-    public String signOut(HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null) {
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-
-        return "redirect:/login?logout";
-    }
-
 }
