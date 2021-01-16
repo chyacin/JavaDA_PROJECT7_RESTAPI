@@ -39,6 +39,14 @@ public class BidListController {
     private final List<BidList> bidLists = new ArrayList<>();
 
 
+    /**
+     * The controller method which gets the home page with all the bids
+     * The user needs to be logged in
+     * If the user isn't logged in, they will be redirected to the login page
+     * @param username logged in user details(information)
+     * @param model a request scoped object injected for us by spring and it's stores attributes.
+     * @return the url with all the bids in total
+     */
     @RequestMapping("/bidList/list")
     public String home(@AuthenticationPrincipal UserDetails username, Model model) {
         // TODO: call service find all bids to show to the view
@@ -56,11 +64,29 @@ public class BidListController {
         return "bidList/list";
     }
 
+    /**
+     * The controller method which gets the form where the user can add his/her bids
+     * The user needs to be logged in
+     * If the user isn't logged in, they will be redirected to the login page
+     * @param username logged in user details(information)
+     * @param bid the object that contains the details of the bid
+     * @return the url where you can add the bids
+     */
     @GetMapping("/bidList/add")
-    public String addBidForm(BidList bid) {
+    public String addBidForm(@AuthenticationPrincipal UserDetails username, BidList bid) {
         return "bidList/add";
     }
 
+    /**
+     * The controller method which check if the data is valid and then save it to the database
+     * The user needs to be logged in
+     * If the user isn't logged in, they will be redirected to the login page
+     * @param username logged in user details(information)
+     * @param bid the object that contains the details of the bid
+     * @param result the validation status of each input field in the form
+     * @param model a request scoped object injected for us by spring and it's stores attributes.
+     * @return the url which redirects and returns the saved bid list
+     */
     @PostMapping("/bidList/validate")
     public String validate(@AuthenticationPrincipal UserDetails username, @Valid BidList bid, BindingResult result, Model model) {
         // TODO: check data valid and save to db, after saving return bid list
@@ -70,15 +96,23 @@ public class BidListController {
             return "bidList/add";
         }
         bid.setCreationDate(Timestamp.from(Instant.now()));
-
         bidListService.saveBidList(bid);
         log.info("Account: " + bid.getAccount(), "Type: " + bid.getType(),
                 "Bid quantity: " + bid.getBidQuantity());
 
 
-        return "redirect/bidList/list";
+        return "redirect:/bidList/list";
     }
 
+    /**
+     * The controller method which gets the form where the user can update a bid with new information
+     * The user needs to be logged in
+     * If the user isn't logged in, they will be redirected to the login page
+     * @param username logged in user details(information)
+     * @param id the integer id of each bid which helps the user identify each bid made
+     * @param model a request scoped object injected for us by spring and it's stores attributes.
+     * @return the url which redirects and returns the web page with form to be updated
+     */
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, Model model) {
         // TODO: get Bid by Id and to model then show to the form
@@ -95,6 +129,17 @@ public class BidListController {
         return "redirect:/bidList/list";
     }
 
+    /**
+     *  The controller method which processes the form where the user can update a bid with new information
+     *  The user needs to be logged in
+     *  If the user isn't logged in, they will be redirected to the login page
+     * @param username logged in user details(information)
+     * @param id the integer id of each bid which helps the user identify each bid made
+     * @param bidList the object that contains the details of the bidList
+     * @param result the validation status of each input field in the form
+     * @param model a request scoped object injected for us by spring and it's stores attributes.
+     * @return the url which redirects and returns the updated bid list
+     */
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, @Valid BidList bidList,
                             BindingResult result, Model model) {
@@ -106,12 +151,19 @@ public class BidListController {
         }
             bidList.setBidListId(id);
             bidListService.updateBidList(bidList);
-            //model.addAttribute("bidList",bidListService.findAllBidList());
+
             log.info("Updated BidList" + bidList.toString());
+            log.info("Update bidList time" + bidList.getRevisionDate());
 
             return "redirect:/bidList/list";
     }
 
+    /**
+     * @param username logged in user details(information)
+     * @param id the integer id of each bid which helps the user identify each bid made
+     * @param model a request scoped object injected for us by spring and it's stores attributes.
+     * @return the url which redirects and returns the bid list without the bid that was deleted
+     */
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, Model model) {
         // TODO: Find Bid by Id and delete the bid, return to Bid list
