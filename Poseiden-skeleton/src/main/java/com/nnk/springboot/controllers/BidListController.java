@@ -95,7 +95,7 @@ public class BidListController {
             log.info("errors : " + result.getAllErrors());
             return "bidList/add";
         }
-        bid.setCreationDate(Timestamp.from(Instant.now()));
+      //  bid.setCreationDate(Timestamp.from(Instant.now()));
         bidListService.saveBidList(bid);
         log.info("Account: " + bid.getAccount(), "Type: " + bid.getType(),
                 "Bid quantity: " + bid.getBidQuantity());
@@ -153,12 +153,14 @@ public class BidListController {
             bidListService.updateBidList(bidList);
 
             log.info("Updated BidList" + bidList.toString());
-            log.info("Update bidList time" + bidList.getRevisionDate());
+            log.info("Update bidList time" + Timestamp.from(Instant.now()));
 
             return "redirect:/bidList/list";
     }
 
     /**
+     *  The controller method which gets the option where the user can delete a bid
+     *  The user needs to be logged in
      * @param username logged in user details(information)
      * @param id the integer id of each bid which helps the user identify each bid made
      * @param model a request scoped object injected for us by spring and it's stores attributes.

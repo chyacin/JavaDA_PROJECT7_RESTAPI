@@ -1,6 +1,7 @@
 package com.nnk.springboot.domain;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -88,7 +89,8 @@ public class BidList {
     @Size(max = 125)
     String revisionName;
 
-    @CreationTimestamp
+
+    @UpdateTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "revisionDate")
     Timestamp revisionDate;
