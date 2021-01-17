@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class BidListServiceImpl implements  BidListService{
+public class BidListServiceImpl implements BidListService{
 
     @Autowired
     private BidListRepository bidListRepository;
@@ -41,7 +41,7 @@ public class BidListServiceImpl implements  BidListService{
     }
 
     /**
-     * The service method which finds and returns all the bids in a list
+     * The service method which finds and returns all the bids and present it in a list
      * @return the list of all the bids
      */
     @Override
