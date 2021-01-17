@@ -45,7 +45,7 @@ public class BidListController {
      * If the user isn't logged in, they will be redirected to the login page
      * @param username logged in user details(information)
      * @param model a request scoped object injected for us by spring and it's stores attributes.
-     * @return the url with all the bids in total
+     * @return the url with all the bids
      */
     @RequestMapping("/bidList/list")
     public String home(@AuthenticationPrincipal UserDetails username, Model model) {
@@ -65,12 +65,12 @@ public class BidListController {
     }
 
     /**
-     * The controller method which gets the form where the user can add his/her bids
+     * The controller method which gets the form where the user can add their bids
      * The user needs to be logged in
      * If the user isn't logged in, they will be redirected to the login page
      * @param username logged in user details(information)
      * @param bid the object that contains the details of the bid
-     * @return the url where you can add the bids
+     * @return the url where you can find the added the bidList form
      */
     @GetMapping("/bidList/add")
     public String addBidForm(@AuthenticationPrincipal UserDetails username, BidList bid) {
@@ -95,7 +95,7 @@ public class BidListController {
             log.info("errors : " + result.getAllErrors());
             return "bidList/add";
         }
-      //  bid.setCreationDate(Timestamp.from(Instant.now()));
+        bid.setCreationDate(Timestamp.from(Instant.now()));
         bidListService.saveBidList(bid);
         log.info("Account: " + bid.getAccount(), "Type: " + bid.getType(),
                 "Bid quantity: " + bid.getBidQuantity());
@@ -138,7 +138,7 @@ public class BidListController {
      * @param bidList the object that contains the details of the bidList
      * @param result the validation status of each input field in the form
      * @param model a request scoped object injected for us by spring and it's stores attributes.
-     * @return the url which redirects and returns the updated bid list
+     * @return the url which redirects and returns the updated bid in the bid list
      */
     @PostMapping("/bidList/update/{id}")
     public String updateBid(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, @Valid BidList bidList,
@@ -146,14 +146,14 @@ public class BidListController {
         // TODO: check required fields, if valid call service to update Bid and return list Bid
 
         if (result.hasErrors()) {
-            log.info("errors : " + result.getAllErrors());
+            log.info("bid errors : " + result.getAllErrors());
             return "/bidList/update";
         }
             bidList.setBidListId(id);
             bidListService.updateBidList(bidList);
 
-            log.info("Updated BidList" + bidList.toString());
-            log.info("Update bidList time" + Timestamp.from(Instant.now()));
+            log.info("Updated BidList" + bidList.toString(),
+                    "Update bidList time" + Timestamp.from(Instant.now()));
 
             return "redirect:/bidList/list";
     }
