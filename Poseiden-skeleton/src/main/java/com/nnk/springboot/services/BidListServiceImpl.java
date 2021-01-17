@@ -15,11 +15,21 @@ public class BidListServiceImpl implements  BidListService{
     @Autowired
     private BidListRepository bidListRepository;
 
+    /**
+     * The service method which saves the bid to the database
+     * @param bidList the bid to be saved
+     * @return the object which is the save bidList
+     */
     @Override
     public BidList saveBidList(BidList bidList) {
         return bidListRepository.save(bidList);
     }
 
+    /**
+     * The service method which finds the respective bid by their corresponding id
+     * @param id the id of the bid
+     * @return the found bid
+     */
     @Override
     public BidList findBidListById(int id) {
        Optional<BidList> bidListOptional = bidListRepository.findById(id);
@@ -30,6 +40,10 @@ public class BidListServiceImpl implements  BidListService{
         return null;
     }
 
+    /**
+     * The service method which finds and returns all the bids in a list
+     * @return the list of all the bids
+     */
     @Override
     public List<BidList> findAllBidList() {
 
@@ -38,19 +52,44 @@ public class BidListServiceImpl implements  BidListService{
     }
 
 
-
+    /**
+     * The service method which updates the user's bid
+     * @param bidList the bid to be updated
+     */
     @Override
     public void updateBidList(BidList bidList) {
         BidList updateBidList = findBidListById(bidList.getBidListId());
         if(updateBidList != null) {
-            updateBidList.setBidQuantity(bidList.getBidQuantity());
+            updateBidList.setBid(bidList.getBid());
+            updateBidList.setBidListDate(bidList.getBidListDate());
             updateBidList.setAccount(bidList.getAccount());
+            updateBidList.setBidQuantity(bidList.getBidQuantity());
             updateBidList.setType(bidList.getType());
+            updateBidList.setAskQuantity(bidList.getAskQuantity());
+            updateBidList.setAsk(bidList.getAsk());
+            updateBidList.setBenchmark(bidList.getBenchmark());
+            updateBidList.setCommentary(bidList.getCommentary());
+            updateBidList.setSecurity(bidList.getSecurity());
+            updateBidList.setStatus(bidList.getStatus());
+            updateBidList.setTrader(bidList.getTrader());
+            updateBidList.setBook(bidList.getBook());
+            updateBidList.setCreationName(bidList.getCreationName());
+            updateBidList.setCreationDate(bidList.getCreationDate());
+            updateBidList.setRevisionName(bidList.getRevisionName());
+            updateBidList.setRevisionDate(bidList.getRevisionDate());
+            updateBidList.setDealName(bidList.getDealName());
+            updateBidList.setDealType(bidList.getDealType());
+            updateBidList.setSourceListId(bidList.getSourceListId());
+            updateBidList.setSide(bidList.getSide());
             bidListRepository.save(updateBidList);
 
         }
     }
 
+    /**
+     * The service method which deletes the user's bid
+     * @param id the id of the bid
+     */
     public void deleteBidList(int id){
         bidListRepository.deleteById(id);
     }
