@@ -22,7 +22,7 @@ public class CurvePoint {
     @Column(name = "id")
     Integer id;
 
-    @NotBlank(message = "Curve Id must not be null")
+    @NotNull(message = "Curve Id must not be null")
     @PositiveOrZero
     @Column(name = "curveId")
     Integer curveId;
