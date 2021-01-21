@@ -23,6 +23,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
+    /**
+     * The service method which creates a user details object from the given user name
+     * @param username the username logged in with
+     * @return the User detail object
+     * @throws UsernameNotFoundException an exception which is thrown if the user is not found in the database
+     */
    @Override
    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        User userByUsername = userRepository.findUserByUsername(username);
