@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.config.ValidPassword;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
@@ -21,10 +22,7 @@ public class User {
     private String username;
 
     @Column(name = "password")
-    @Size(max = 125)
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$", message = "Password must have at least one uppercase character [A-Z]," +
-            " it must contain at least one lowercase character [a-z], it must contain at least one special character like ! @ # & ( )," +
-            " it must contain a length of at least 8 characters and a maximum of 20 characters, it must contain at least one digit [0-9] ")
+    @ValidPassword
     @NotBlank(message = "Password is mandatory")
     private String password;
 
@@ -42,13 +40,7 @@ public class User {
     }
 
     public User(Integer id, @NotBlank(message = "Username is mandatory") String username,
-                @NotBlank(message = "Password is mandatory") @Length(min = 8)
-                @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$",
-                        message = "Password must have at least one uppercase character [A-Z]," +
-                                " it must contain at least one lowercase character [a-z]," +
-                                " it must contain at least one special character like ! @ # & ( )," +
-                                " it must contain a length of at least 8 characters and a maximum of 20 characters, " +
-                                "it must contain at least one digit [0-9] ") String password,
+                @NotBlank(message = "Password is mandatory") @Length(min = 8) String password,
                 @NotBlank(message = "FullName is mandatory") String fullname, @NotBlank(message = "Role is mandatory") String role) {
         this.id = id;
         this.username = username;

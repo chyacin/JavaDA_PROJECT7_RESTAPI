@@ -2,13 +2,11 @@ package com.nnk.springboot.domain;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "bidlist")
@@ -54,7 +52,7 @@ public class BidList {
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "bidListDate")
-    Timestamp bidListDate;
+    LocalDateTime bidListDate;
 
     @Column(name = "commentary")
     @Size(max = 125)
@@ -83,7 +81,7 @@ public class BidList {
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "creationDate")
-    Timestamp creationDate;
+    LocalDateTime creationDate;
 
     @Column(name = "revisionName")
     @Size(max = 125)
@@ -93,7 +91,7 @@ public class BidList {
     @UpdateTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "revisionDate")
-    Timestamp revisionDate;
+    LocalDateTime revisionDate;
 
     @Column(name = "dealName")
     @Size(max = 125)
@@ -182,11 +180,11 @@ public class BidList {
         this.benchmark = benchmark;
     }
 
-    public Timestamp getBidListDate() {
+    public LocalDateTime getBidListDate() {
         return bidListDate;
     }
 
-    public void setBidListDate(Timestamp bidListDate) {
+    public void setBidListDate(LocalDateTime bidListDate) {
         this.bidListDate = bidListDate;
     }
 
@@ -238,11 +236,11 @@ public class BidList {
         this.creationName = creationName;
     }
 
-    public Timestamp getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Timestamp creationDate) {
+    public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -254,11 +252,11 @@ public class BidList {
         this.revisionName = revisionName;
     }
 
-    public Timestamp getRevisionDate() {
+    public LocalDateTime getRevisionDate() {
         return revisionDate;
     }
 
-    public void setRevisionDate(Timestamp revisionDate) {
+    public void setRevisionDate(LocalDateTime revisionDate) {
         this.revisionDate = revisionDate;
     }
 

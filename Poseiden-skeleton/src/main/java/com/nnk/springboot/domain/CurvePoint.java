@@ -1,15 +1,13 @@
 package com.nnk.springboot.domain;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 
 @Entity
@@ -31,7 +29,7 @@ public class CurvePoint {
     @FutureOrPresent
     @Column(name = "asOfDate")
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    Timestamp asOfDate;
+    LocalDate asOfDate;
 
     @Column(name = "term")
     Double term;
@@ -42,7 +40,7 @@ public class CurvePoint {
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "creationDate")
-    Timestamp creationDate;
+    LocalDate creationDate;
 
     public CurvePoint() {
     }
@@ -66,11 +64,11 @@ public class CurvePoint {
         this.curveId = curveId;
     }
 
-    public Timestamp getAsOfDate() {
+    public @FutureOrPresent LocalDate getAsOfDate() {
         return asOfDate;
     }
 
-    public void setAsOfDate(Timestamp asOfDate) {
+    public void setAsOfDate(@FutureOrPresent LocalDate asOfDate) {
         this.asOfDate = asOfDate;
     }
 
@@ -90,11 +88,11 @@ public class CurvePoint {
         this.value = value;
     }
 
-    public Timestamp getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Timestamp creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 }

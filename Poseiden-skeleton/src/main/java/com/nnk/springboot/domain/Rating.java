@@ -18,7 +18,7 @@ public class Rating {
     @Column(name = "id")
     Integer id;
 
-    @Column(name = "moodsRating")
+    @Column(name = "moodysRating")
     @Size(max = 125)
     String moodysRating;
 

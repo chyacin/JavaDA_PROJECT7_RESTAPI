@@ -5,10 +5,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 
 @Entity
@@ -54,7 +53,7 @@ public class Trade {
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "tradeDate")
-    Timestamp tradeDate;
+    LocalDate tradeDate;
 
     @Column(name = "security")
     @Size(max = 125)
@@ -79,7 +78,7 @@ public class Trade {
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "creationDate")
-    Timestamp creationDate;
+    LocalDate creationDate;
 
     @Column(name = "revisionName")
     @Size(max = 125)
@@ -88,7 +87,7 @@ public class Trade {
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "revisionDate")
-    Timestamp revisionDate;
+    LocalDate revisionDate;
 
     @Column(name = "dealName")
     @Size(max = 125)
@@ -176,11 +175,11 @@ public class Trade {
         this.benchmark = benchmark;
     }
 
-    public Timestamp getTradeDate() {
+    public LocalDate getTradeDate() {
         return tradeDate;
     }
 
-    public void setTradeDate(Timestamp tradeDate) {
+    public void setTradeDate(LocalDate tradeDate) {
         this.tradeDate = tradeDate;
     }
 
@@ -224,11 +223,11 @@ public class Trade {
         this.creationName = creationName;
     }
 
-    public Timestamp getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Timestamp creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -240,11 +239,11 @@ public class Trade {
         this.revisionName = revisionName;
     }
 
-    public Timestamp getRevisionDate() {
+    public LocalDate getRevisionDate() {
         return revisionDate;
     }
 
-    public void setRevisionDate(Timestamp revisionDate) {
+    public void setRevisionDate(LocalDate revisionDate) {
         this.revisionDate = revisionDate;
     }
 
