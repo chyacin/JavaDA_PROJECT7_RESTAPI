@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "bidlist")
@@ -52,7 +52,7 @@ public class BidList {
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "bidListDate")
-    LocalDateTime bidListDate;
+    LocalDate bidListDate;
 
     @Column(name = "commentary")
     @Size(max = 125)
@@ -81,7 +81,7 @@ public class BidList {
     @CreationTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "creationDate")
-    LocalDateTime creationDate;
+    LocalDate creationDate;
 
     @Column(name = "revisionName")
     @Size(max = 125)
@@ -91,7 +91,7 @@ public class BidList {
     @UpdateTimestamp
     @DateTimeFormat(pattern="yyyy-MM-dd")
     @Column(name = "revisionDate")
-    LocalDateTime revisionDate;
+    LocalDate revisionDate;
 
     @Column(name = "dealName")
     @Size(max = 125)
@@ -180,11 +180,11 @@ public class BidList {
         this.benchmark = benchmark;
     }
 
-    public LocalDateTime getBidListDate() {
+    public LocalDate getBidListDate() {
         return bidListDate;
     }
 
-    public void setBidListDate(LocalDateTime bidListDate) {
+    public void setBidListDate(LocalDate bidListDate) {
         this.bidListDate = bidListDate;
     }
 
@@ -236,11 +236,11 @@ public class BidList {
         this.creationName = creationName;
     }
 
-    public LocalDateTime getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(LocalDateTime creationDate) {
+    public void setCreationDate(LocalDate creationDate) {
         this.creationDate = creationDate;
     }
 
@@ -252,11 +252,11 @@ public class BidList {
         this.revisionName = revisionName;
     }
 
-    public LocalDateTime getRevisionDate() {
+    public LocalDate getRevisionDate() {
         return revisionDate;
     }
 
-    public void setRevisionDate(LocalDateTime revisionDate) {
+    public void setRevisionDate(LocalDate revisionDate) {
         this.revisionDate = revisionDate;
     }
 

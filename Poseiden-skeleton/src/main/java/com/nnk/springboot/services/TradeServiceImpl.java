@@ -59,29 +59,29 @@ public class TradeServiceImpl implements TradeService{
     @Override
     public void updateTrade(Trade trade) {
         Trade updateTrade =findTradeById(trade.getTradeId());
-        updateTrade.setAccount(trade.getAccount());
-        updateTrade.setType(trade.getType());
-        updateTrade.setBuyQuantity(trade.getBuyQuantity());
-        updateTrade.setSellQuantity(trade.getSellQuantity());
-        updateTrade.setBuyPrice(trade.getBuyPrice());
-        updateTrade.setSellPrice(trade.getSellPrice());
-        updateTrade.setTradeDate(trade.getTradeDate());
-        updateTrade.setSecurity(trade.getSecurity());
-        updateTrade.setStatus(trade.getStatus());
-        updateTrade.setTrader(trade.getTrader());
-        updateTrade.setBenchmark(trade.getBenchmark());
-        updateTrade.setBook(trade.getBook());
-        updateTrade.setCreationName(trade.getCreationName());
-        updateTrade.setCreationDate(trade.getCreationDate());
-        updateTrade.setRevisionName(trade.getRevisionName());
-        updateTrade.setRevisionDate(trade.getRevisionDate());
-        updateTrade.setDealName(trade.getDealName());
-        updateTrade.setDealType(trade.getDealType());
-        updateTrade.setSourceListId(trade.getSourceListId());
-        updateTrade.setSide(trade.getSide());
-
-        tradeRepository.save(updateTrade);
-
+        if(updateTrade != null) {
+            updateTrade.setAccount(trade.getAccount());
+            updateTrade.setType(trade.getType());
+            updateTrade.setBuyQuantity(trade.getBuyQuantity());
+            updateTrade.setSellQuantity(trade.getSellQuantity());
+            updateTrade.setBuyPrice(trade.getBuyPrice());
+            updateTrade.setSellPrice(trade.getSellPrice());
+            updateTrade.setTradeDate(trade.getTradeDate());
+            updateTrade.setSecurity(trade.getSecurity());
+            updateTrade.setStatus(trade.getStatus());
+            updateTrade.setTrader(trade.getTrader());
+            updateTrade.setBenchmark(trade.getBenchmark());
+            updateTrade.setBook(trade.getBook());
+            updateTrade.setCreationName(trade.getCreationName());
+            updateTrade.setCreationDate(trade.getCreationDate());
+            updateTrade.setRevisionName(trade.getRevisionName());
+            updateTrade.setRevisionDate(trade.getRevisionDate());
+            updateTrade.setDealName(trade.getDealName());
+            updateTrade.setDealType(trade.getDealType());
+            updateTrade.setSourceListId(trade.getSourceListId());
+            updateTrade.setSide(trade.getSide());
+            tradeRepository.save(updateTrade);
+        }
     }
 
     /**

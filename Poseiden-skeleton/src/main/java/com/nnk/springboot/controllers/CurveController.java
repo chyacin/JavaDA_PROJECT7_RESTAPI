@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,6 @@ public class CurveController {
     CurveServiceImpl curvePointService;
 
     Logger log = LoggerFactory.getLogger(CurveController.class);
-    private final List<CurvePoint> curvePointList = new ArrayList<>();
 
     /**
      * The controller method which gets the home page with all the curve points
@@ -49,12 +49,14 @@ public class CurveController {
         // TODO: find all Curve Point, add to model
         String loggedInUsername = username.getUsername(); // get logged in username
         User loggedInUser = userService.findUserByUsername(loggedInUsername);
+        List<CurvePoint> curvePointList = new ArrayList<>();
 
         if(loggedInUser != null){
-            model.addAttribute("curvePoint", curvePointService.findAllCurvePoint());
-        }
+            curvePointList = curvePointService.findAllCurvePoint();
 
-        log.info("Total Curve Points in a List" + curvePointList.size());
+        }
+        model.addAttribute("curvePoint", curvePointList);
+        log.info("Total Curve points in a List: " + curvePointList.size());
 
         return "curvePoint/list";
     }
@@ -69,6 +71,8 @@ public class CurveController {
      * */
     @GetMapping("/curvePoint/add")
     public String addBidForm(@AuthenticationPrincipal UserDetails username, CurvePoint bid) {
+
+        log.info(username.getUsername() + " loaded a Curve point add form " + bid);
         return "curvePoint/add";
     }
 
@@ -87,13 +91,12 @@ public class CurveController {
         // TODO: check data valid and save to db, after saving return Curve list
 
         if(result.hasErrors()){
-            log.info("errors: " + result.getAllErrors());
+            log.info("Curve point errors: " + result.getAllErrors());
             return "curvePoint/add";
         }
-        curvePoint.setCreationDate(Timestamp.from(Instant.now()));
         curvePointService.saveCurvePoint(curvePoint);
-        log.info("Curve Id" + curvePoint.getCurveId(), "Term" + curvePoint.getTerm(),
-                "Value" + curvePoint.getValue());
+        log.info("Curve Id: " + curvePoint.getCurveId() +", "+ "Term: " + curvePoint.getTerm() +", "+
+                "Value: " + curvePoint.getValue() +", "+ "Creation date: " + curvePoint.getCreationDate());
 
         return"redirect:/curvePoint/list";
     }
@@ -103,7 +106,7 @@ public class CurveController {
      * The user needs to be logged in
      * If the user isn't logged in, they will be redirected to the login page
      * @param username logged in user details(information)
-     * @param id the integer id of each bid which helps the user identify each bid made
+     * @param id the integer id of each curve point which helps the user identify each curve point made
      * @param model a request scoped object injected for us by spring and it's stores attributes.
      * @return the url which redirects and returns the web page with form to be updated
      */
@@ -115,9 +118,8 @@ public class CurveController {
 
         if(curvePoint != null){
           model.addAttribute("curvePoint", curvePoint);
-            log.info("Curve Id" + curvePoint.getCurveId(), "Term" + curvePoint.getTerm(),
-                    "Value" + curvePoint.getValue());
-
+            log.info("Curve Id: " + curvePoint.getCurveId() +", "+ "Term: " + curvePoint.getTerm() +", "+
+                    "Value: " + curvePoint.getValue());
             return "curvePoint/update";
 
         }
@@ -141,14 +143,14 @@ public class CurveController {
         // TODO: check required fields, if valid call service to update Curve and return Curve list
 
         if(result.hasErrors()) {
-            log.info("curve errors" + result.getAllErrors());
+            log.info("Curve point errors" + result.getAllErrors());
             return "/curvePoint/update";
         }
         curvePoint.setId(id);
         curvePointService.updateCurvePoint(curvePoint);
 
-        log.info("Updated Curve Point" + curvePoint.toString(),
-                "Updated Curve Point time" + Timestamp.from(Instant.now()));
+        log.info("Updated Curve Point: " + curvePoint.toString() +", "+
+                "Updated time for the Curve Point: " + LocalDate.now());
 
         return "redirect:/curvePoint/list";
     }
@@ -157,7 +159,7 @@ public class CurveController {
      * The controller method which gets the option where the user can delete a curve point
      * The user needs to be logged in
      * @param username logged in user details(information)
-     * @param id the integer id of each bid which helps the user identify each curve point made
+     * @param id the integer id of each curve point which helps the user identify each curve point made
      * @param model a request scoped object injected for us by spring and it's stores attributes.
      * @return the url which redirects and returns the bid list without the bid that was deleted
      */
@@ -174,7 +176,7 @@ public class CurveController {
             }catch (Exception e){
                 System.out.println("error with deleting curve point");
             }
-            log.info("Deleted Curve point" + curvePointById.toString());
+            log.info("Deleted Curve point: " + curvePointById.toString());
             return "redirect:/curvePoint/list";
         }
         return "curvePoint/list";

@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
-import java.time.Instant;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class BidListController {
     BidListServiceImpl bidListService;
 
     Logger log = LoggerFactory.getLogger(BidListController.class);
-    private final List<BidList> bidLists = new ArrayList<>();
+
 
 
     /**
@@ -53,12 +52,13 @@ public class BidListController {
 
         String loggedInUsername = username.getUsername(); // get logged in username
         User loggedInUser = userService.findUserByUsername(loggedInUsername);
+        List<BidList> bidLists = new ArrayList<>();
 
         if (loggedInUser != null) {
-            model.addAttribute("bidList", bidListService.findAllBidList());
+            bidLists = bidListService.findAllBidList();
         }
-
-            log.info("Total Bids in List: " + bidLists.size());
+        model.addAttribute("bidList", bidLists);
+        log.info("Total Bids in List: " + bidLists.size());
 
 
         return "bidList/list";
@@ -70,10 +70,12 @@ public class BidListController {
      * If the user isn't logged in, they will be redirected to the login page
      * @param username logged in user details(information)
      * @param bid the object that contains the details of the bid
-     * @return the url where you can find the added the bidList form
+     * @return the url where you can find the bidList form
      */
     @GetMapping("/bidList/add")
     public String addBidForm(@AuthenticationPrincipal UserDetails username, BidList bid) {
+
+        log.info(username.getUsername() + " loaded a Bid list add form " + bid);
         return "bidList/add";
     }
 
@@ -92,13 +94,12 @@ public class BidListController {
         // TODO: check data valid and save to db, after saving return bid list
 
         if (result.hasErrors()) {
-            log.info("errors : " + result.getAllErrors());
+            log.info("Bid errors : " + result.getAllErrors());
             return "bidList/add";
         }
-        bid.setCreationDate(Timestamp.from(Instant.now()));
         bidListService.saveBidList(bid);
-        log.info("Account: " + bid.getAccount(), "Type: " + bid.getType(),
-                "Bid quantity: " + bid.getBidQuantity());
+        log.info("Account name: " + bid.getAccount() + ", " +  "Type name: " + bid.getType() + ", " +
+                "BidQuantity name: " + ", " + bid.getBidQuantity() + ", " + "Creation Date: "+ bid.getCreationDate());
 
 
         return "redirect:/bidList/list";
@@ -121,18 +122,19 @@ public class BidListController {
 
         if (bidList != null) {
             model.addAttribute("bidList", bidList);
-                log.info("Account: " + bidList.getAccount(), "Type: " + bidList.getType(),
-                        "Bid quantity: " + bidList.getBidQuantity());
 
-                return "bidList/update";
-            }
+            log.info("Account name: " + bidList.getAccount()+ ", " +  "Type name: " + bidList.getType() + ", " +
+                    "BidQuantity name: " + ", " + bidList.getBidQuantity());
+
+            return "bidList/update";
+        }
         return "redirect:/bidList/list";
     }
 
     /**
-     *  The controller method which processes the form where the user can update a bid with new information
-     *  The user needs to be logged in
-     *  If the user isn't logged in, they will be redirected to the login page
+     * The controller method which processes the form where the user can update a bid with new information
+     * The user needs to be logged in
+     * If the user isn't logged in, they will be redirected to the login page
      * @param username logged in user details(information)
      * @param id the integer id of each bid which helps the user identify each bid made
      * @param bidList the object that contains the details of the bidList
@@ -146,21 +148,21 @@ public class BidListController {
         // TODO: check required fields, if valid call service to update Bid and return list Bid
 
         if (result.hasErrors()) {
-            log.info("bid errors : " + result.getAllErrors());
-            return "/bidList/update";
+            log.info("Bid errors : " + result.getAllErrors());
+            return "bidList/update";
         }
             bidList.setBidListId(id);
             bidListService.updateBidList(bidList);
 
-            log.info("Updated BidList" + bidList.toString(),
-                    "Update bidList time" + Timestamp.from(Instant.now()));
+            log.info("Updated BidList" + bidList.toString() +", "+
+                    "Updated time for the bid" + bidList.getRevisionDate());
 
             return "redirect:/bidList/list";
     }
 
     /**
-     *  The controller method which gets the option where the user can delete a bid
-     *  The user needs to be logged in
+     * The controller method which gets the option where the user can delete a bid
+     * The user needs to be logged in
      * @param username logged in user details(information)
      * @param id the integer id of each bid which helps the user identify each bid made
      * @param model a request scoped object injected for us by spring and it's stores attributes.
@@ -173,7 +175,7 @@ public class BidListController {
         BidList bidListById = bidListService.findBidListById(id);
 
         if (bidListById != null) {
-            System.out.println("Bid list to delete" + id);
+            log.info("Bid list to delete" + id);
           try {
               bidListService.deleteBidList(id);
           }catch (Exception e){
