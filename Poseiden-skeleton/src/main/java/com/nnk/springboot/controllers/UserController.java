@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -43,7 +44,7 @@ public class UserController {
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     Logger log = LoggerFactory.getLogger(UserController.class);
-    private final List<User> userList = new ArrayList<>();
+
 
 
     /**
@@ -59,11 +60,12 @@ public class UserController {
     {
         String loggedInUsername = username.getUsername(); // get logged in username
         User loggedInUser = userService.findUserByUsername(loggedInUsername);
+        List<User> userList = new ArrayList<>();
 
         if(loggedInUser != null){
-            model.addAttribute("users", userService.findAllUsers());
+            userList = userService.findAllUsers();
         }
-
+        model.addAttribute("users", userService.findAllUsers());
         log.info("Total Users in List: " + userList.size());
 
         return "user/list";
@@ -79,6 +81,8 @@ public class UserController {
      */
     @GetMapping("/user/add")
     public String addUser(@AuthenticationPrincipal UserDetails username, User bid) {
+
+        log.info(username.getUsername() + " loaded a User add form " + bid);
         return "user/add";
     }
 
@@ -101,13 +105,10 @@ public class UserController {
             return "user/add";
         }
 
-      /*  BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));*/
-
         userService.saveUser(user);
         model.addAttribute("users", userService.findAllUsers());
 
-        log.info("Full name: " + user.getFullname(), "Username: " + user.getUsername(),
+        log.info("Full name: " + user.getFullname() + ", " + "Username: " + user.getUsername() + ", " +
                 "Role name: " + user.getRole());
 
         return "redirect:/user/list";
@@ -130,8 +131,8 @@ public class UserController {
 
         if(user != null){
             user.setPassword("");
-            model.addAttribute("user", user);
-            log.info("Full name: " + user.getFullname(), "Username: " + user.getUsername(),
+            model.addAttribute("users", user);
+            log.info("Full name: " + user.getFullname() + ", " + "Username: " + user.getUsername() + ", " +
                     "Role name: " + user.getRole());
             return "user/update";
         }
@@ -163,8 +164,8 @@ public class UserController {
         userService.updateUser(user);
         model.addAttribute("users", userService.findAllUsers());
 
-        log.info("Updated User: " + user.toString(),
-                  "Updated time: " + Timestamp.from(Instant.now()));
+        log.info("Updated User: " + user.toString() +", "+
+                  "Updated time: " + LocalDate.now());
         return "redirect:/user/list";
     }
 

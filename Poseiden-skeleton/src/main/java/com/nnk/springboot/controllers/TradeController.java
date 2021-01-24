@@ -1,6 +1,5 @@
 package com.nnk.springboot.controllers;
 
-import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.services.TradeServiceImpl;
@@ -19,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +32,7 @@ public class TradeController {
     TradeServiceImpl tradeService;
 
     Logger log = LoggerFactory.getLogger(TradeController.class);
-    private final List<Trade> tradeList = new ArrayList<>();
+
 
     /**
      * The controller method which gets the home page with all the trades
@@ -51,10 +48,12 @@ public class TradeController {
         // TODO: find all Trade, add to model
         String loggedInUsername = username.getUsername(); // get logged in username
         User loggedInUser = userService.findUserByUsername(loggedInUsername);
+        List<Trade> tradeList = new ArrayList<>();
 
         if(loggedInUser != null){
-            model.addAttribute("trade", tradeService.findAllTrade());
+            tradeList = tradeService.findAllTrade();
         }
+        model.addAttribute("trade", tradeService.findAllTrade());
         log.info("Total Trade in the list: " + tradeList.size());
 
         return "trade/list";
@@ -70,6 +69,8 @@ public class TradeController {
      */
     @GetMapping("/trade/add")
     public String addTrade(@AuthenticationPrincipal UserDetails username, Trade bid) {
+
+        log.info(username.getUsername() + " loaded a Trade add form " + bid);
         return "trade/add";
     }
 
@@ -92,7 +93,7 @@ public class TradeController {
             return "trade/add";
         }
         tradeService.saveTrade(trade);
-        log.info("Account: " + trade.getAccount(), "Type: " + trade.getType(),
+        log.info("Account: " + trade.getAccount() + ", " + "Type: " + trade.getType() + ", " +
                 "Buy Quantity: " + trade.getBuyQuantity());
 
         return "redirect:/trade/list";
@@ -115,7 +116,7 @@ public class TradeController {
 
         if(trade != null) {
             model.addAttribute("trade", trade);
-            log.info("Account: " + trade.getAccount(), "Type: " + trade.getType(),
+            log.info("Account: " + trade.getAccount() + ", " + "Type: " + trade.getType() + ", " +
                     "Buy Quantity: " + trade.getBuyQuantity());
 
             return "trade/update";
@@ -147,8 +148,9 @@ public class TradeController {
         trade.setTradeId(id);
         tradeService.updateTrade(trade);
 
-        log.info("Updated Trade name: " + trade.toString(),
-                 "Updated Trade name time" + Timestamp.from(Instant.now()));
+        log.info("Updated Trade name: " + trade.toString() +", "+
+                 "Updated Trade name time" + trade.getRevisionDate());
+
         return "redirect:/trade/list";
     }
 

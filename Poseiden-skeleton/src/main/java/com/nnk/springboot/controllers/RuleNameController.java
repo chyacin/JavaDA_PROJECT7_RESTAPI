@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,6 @@ public class RuleNameController {
     RuleNameServiceImpl ruleNameService;
 
     Logger log = LoggerFactory.getLogger(RuleNameController.class);
-    private final List<RuleName> ruleNameList = new ArrayList<>();
 
     /**
      * The controller method which gets the home page with all the rule names
@@ -50,11 +50,12 @@ public class RuleNameController {
         // TODO: find all RuleName, add to model
         String loggedInUsername = username.getUsername(); // get logged in username
         User loggedInUser = userService.findUserByUsername(loggedInUsername);
+        List<RuleName> ruleNameList = new ArrayList<>();
 
         if (loggedInUser != null) {
-            model.addAttribute("ruleName", ruleNameService.findAllRuleName());
+            ruleNameList = ruleNameService.findAllRuleName();
         }
-
+        model.addAttribute("ruleName", ruleNameService.findAllRuleName());
         log.info("Total Rule Name in List: " + ruleNameList.size());
 
         return "ruleName/list";
@@ -70,6 +71,8 @@ public class RuleNameController {
      */
     @GetMapping("/ruleName/add")
     public String addRuleForm(@AuthenticationPrincipal UserDetails username, RuleName bid) {
+
+        log.info(username.getUsername() + " loaded a Rule name add form " + bid);
         return "ruleName/add";
     }
 
@@ -92,9 +95,9 @@ public class RuleNameController {
             return "ruleName/add";
         }
         ruleNameService.saveRuleName(ruleName);
-        log.info("Name: " + ruleName.getName(), "Description: " + ruleName.getDescription(),
-                "json: " + ruleName.getJson(), "template: " + ruleName.getTemplate(),
-                "sql: " + ruleName.getSqlStr(), "sqlPart" + ruleName.getSqlPart());
+        log.info("Name: " + ruleName.getName() + ", " +  "Description: " + ruleName.getDescription() + ", " +
+                "json: " + ruleName.getJson() + ", " +  "template: " + ruleName.getTemplate() + ", " +
+                "sql: " + ruleName.getSqlStr() + ", " +  "sqlPart" + ruleName.getSqlPart());
 
         return "redirect:/ruleName/list";
     }
@@ -116,9 +119,10 @@ public class RuleNameController {
 
         if (ruleName != null) {
             model.addAttribute("ruleName", ruleName);
-            log.info("Name: " + ruleName.getName(), "Description: " + ruleName.getDescription(),
-                    "json: " + ruleName.getJson(), "template: " + ruleName.getTemplate(),
-                    "sql: " + ruleName.getSqlStr(), "sqlPart" + ruleName.getSqlPart());
+
+            log.info("Name: " + ruleName.getName() + ", " +  "Description: " + ruleName.getDescription() + ", " +
+                    "json: " + ruleName.getJson() + ", " +  "template: " + ruleName.getTemplate() + ", " +
+                    "sql: " + ruleName.getSqlStr() + ", " +  "sqlPart: " + ruleName.getSqlPart());
 
             return "ruleName/update";
         }
@@ -149,8 +153,8 @@ public class RuleNameController {
         ruleName.setId(id);
         ruleNameService.updateRuleName(ruleName);
 
-        log.info("Updated Rule name" + ruleName.toString(),
-                "Update rule name time" + Timestamp.from(Instant.now()));
+        log.info("Updated Rule name" + ruleName.toString() +", "+
+                "Update rule name time" + LocalDate.now());
 
         return "redirect:/ruleName/list";
     }

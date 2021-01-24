@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class RatingController {
     RatingServiceImpl ratingService;
 
     Logger log = LoggerFactory.getLogger(RatingController.class);
-    private final List<Rating> ratingList = new ArrayList<>();
+
 
     /**
      * The controller method which gets the home page with all the ratings
@@ -51,10 +52,12 @@ public class RatingController {
         // TODO: find all Rating, add to model
         String loggedInUsername = username.getUsername(); // get logged in username
         User loggedInUser = userService.findUserByUsername(loggedInUsername);
+        List<Rating> ratingList = new ArrayList<>();
 
         if(loggedInUser != null){
-            model.addAttribute("rating", ratingService.findAllRating());
+            ratingList = ratingService.findAllRating();
         }
+        model.addAttribute("rating", ratingService.findAllRating());
         log.info("Total ratings in the list: " + ratingList.size());
 
         return "rating/list";
@@ -70,6 +73,8 @@ public class RatingController {
      */
     @GetMapping("/rating/add")
     public String addRatingForm(@AuthenticationPrincipal UserDetails username, Rating rating) {
+
+        log.info(username.getUsername() + " loaded a rating add form " + rating);
         return "rating/add";
     }
 
@@ -92,8 +97,8 @@ public class RatingController {
             return "rating/add";
         }
         ratingService.saveRating(rating);
-        log.info("Fitch rating: " + rating.getFitchRating(), "Moody's Rating: " + rating.getMoodysRating(),
-                "Sand P rating: " + rating.getSandPRating(), "Order number: " + rating.getOrderNumber());
+        log.info("Fitch rating: " + rating.getFitchRating() +", "+ "Moody's Rating: " + rating.getMoodysRating() +", "+
+                "Sand P rating: " + rating.getSandPRating() +", "+ "Order number: " + rating.getOrderNumber());
 
         return "redirect:/rating/list";
     }
@@ -115,8 +120,9 @@ public class RatingController {
 
         if(rating != null) {
             model.addAttribute("rating", rating);
-            log.info("Fitch rating: " + rating.getFitchRating(), "Moody's Rating: " + rating.getMoodysRating(),
-                    "Sand P rating: " + rating.getSandPRating(), "Order number: " + rating.getOrderNumber());
+            log.info("Fitch rating: " + rating.getFitchRating() +", "+ "Moody's Rating: " + rating.getMoodysRating() +", "+
+                    "Sand P rating: " + rating.getSandPRating() +", "+ "Order number: " + rating.getOrderNumber());
+
             return "rating/update";
         }
         return "redirect:/rating/list";
@@ -146,7 +152,7 @@ public class RatingController {
         ratingService.updateRating(rating);
 
         log.info("Updated Rating: " + rating.toString(),
-                "Updated Rating time" + Timestamp.from(Instant.now()));
+                "Updated Rating time" + LocalDate.now());
 
         return "redirect:/rating/list";
     }

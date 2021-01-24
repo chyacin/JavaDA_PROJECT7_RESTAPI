@@ -20,7 +20,7 @@ public class LoginController {
      * The controller method which gets the user the login page
      * @return the login page
      */
-    @GetMapping("login")
+    @GetMapping("/login")
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("login");
@@ -34,7 +34,8 @@ public class LoginController {
      * @param username logged in user details(information)
      * @return the url returns the list of users for this application
      */
-    @GetMapping("app/secure/article-details")
+
+    @GetMapping("/secure/article-details")
     public ModelAndView getAllUserArticles(@AuthenticationPrincipal UserDetails username) {
         ModelAndView mav = new ModelAndView();
         if(username != null && username.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
@@ -55,7 +56,7 @@ public class LoginController {
      * @param username logged in user details(information)
      * @return the url returns a page with information stating that the user doesn't have access
      */
-    @GetMapping("app/error")
+    @GetMapping("/error")
     public ModelAndView error(@AuthenticationPrincipal UserDetails username) {
         ModelAndView mav = new ModelAndView();
         String errorMessage= "You are not authorized for the requested data.";

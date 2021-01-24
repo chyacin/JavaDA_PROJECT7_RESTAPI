@@ -1,5 +1,10 @@
 package com.nnk.springboot.controllers;
 
+import com.nnk.springboot.domain.User;
+import com.nnk.springboot.services.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -9,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController
 {
+
+	@Autowired
+	UserService userService;
+
+	Logger log = LoggerFactory.getLogger(HomeController.class);
 
 	/**
 	 * The controller method which gets the user their home page
@@ -21,6 +31,9 @@ public class HomeController
 	@RequestMapping("/")
 	public String home(@AuthenticationPrincipal UserDetails username, Model model)
 	{
+		String loggedInUsername = username.getUsername(); // get logged in username
+		User loggedInUser = userService.findUserByUsername(loggedInUsername);
+
 		return "home";
 	}
 
@@ -36,7 +49,11 @@ public class HomeController
 	@RequestMapping("/admin/home")
 	public String adminHome(@AuthenticationPrincipal UserDetails username, Model model)
 	{
-		return "redirect:/bidList/list";
+		if(username != null && username.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))){
+
+			return "redirect:/bidList/list";
+		}
+		return "app/error";
 	}
 
 
