@@ -39,14 +39,10 @@ public class User {
     public User() {
     }
 
-    public User(Integer id, @NotBlank(message = "Username is mandatory") String username,
-                @NotBlank(message = "Password is mandatory") @Length(min = 8) String password,
-                @NotBlank(message = "FullName is mandatory") String fullname, @NotBlank(message = "Role is mandatory") String role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.fullname = fullname;
-        this.role = role;
+
+
+    public User( String username,String fullname, String role) {
+
     }
 
     public Integer getId() {
