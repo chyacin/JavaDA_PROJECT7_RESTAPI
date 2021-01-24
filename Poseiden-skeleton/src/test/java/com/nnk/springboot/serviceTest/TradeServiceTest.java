@@ -21,7 +21,6 @@ import static junit.framework.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringBootTest
 public class TradeServiceTest {
 
     @InjectMocks

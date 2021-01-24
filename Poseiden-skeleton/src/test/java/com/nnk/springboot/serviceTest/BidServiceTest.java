@@ -23,7 +23,6 @@ import static org.junit.Assert.assertEquals;
 
 
 @RunWith(MockitoJUnitRunner.class)
-@SpringBootTest
 public class BidServiceTest {
 
     @InjectMocks
