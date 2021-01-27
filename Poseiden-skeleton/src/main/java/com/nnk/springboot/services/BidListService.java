@@ -1,6 +1,7 @@
 package com.nnk.springboot.services;
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.domain.User;
 
 import java.util.List;
 
@@ -12,4 +13,5 @@ public interface BidListService {
     List<BidList> findAllBidList();
     public void updateBidList(BidList bidList);
     public void deleteBidList(int id);
+
 }

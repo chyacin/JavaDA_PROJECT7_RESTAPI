@@ -2,6 +2,7 @@ package com.nnk.springboot.services;
 
 
 import com.nnk.springboot.domain.BidList;
+import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.BidListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,7 @@ public class BidListServiceImpl implements BidListService{
        }
         return null;
     }
+
 
     /**
      * The service method which finds and returns all the bids and present it in a list
@@ -93,4 +95,6 @@ public class BidListServiceImpl implements BidListService{
     public void deleteBidList(int id){
         bidListRepository.deleteById(id);
     }
+
+
 }

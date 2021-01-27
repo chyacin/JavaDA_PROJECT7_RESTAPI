@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +32,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
 
 @Controller
 public class UserController {
@@ -55,22 +57,27 @@ public class UserController {
      * @param model a request scoped object injected for us by spring and it's stores attributes.
      * @return the url with all the users
      */
+
     @RequestMapping("/user/list")
-    public String home(@AuthenticationPrincipal UserDetails username, Model model)
+    public ModelAndView home(@AuthenticationPrincipal UserDetails username, Model model)
     {
+        ModelAndView mav = new ModelAndView();
         String loggedInUsername = username.getUsername(); // get logged in username
         User loggedInUser = userService.findUserByUsername(loggedInUsername);
         List<User> userList = new ArrayList<>();
 
-        if(loggedInUser != null){
+        if(username != null && username.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+
             userList = userService.findAllUsers();
+            model.addAttribute("users", userService.findAllUsers());
+            log.info("Total Users in List: " + userList.size());
         }
-        model.addAttribute("users", userService.findAllUsers());
-        log.info("Total Users in List: " + userList.size());
+        else {
+            mav.setViewName("403");
 
-        return "user/list";
+        }
+        return mav;
     }
-
     /**
      * The controller method which gets the form where the admin can add a new user
      * The user needs to be logged in
@@ -79,6 +86,7 @@ public class UserController {
      * @param bid the object that contains the details of the user
      * @return the url where you can find the user form
      */
+    @RolesAllowed("ADMIN")
     @GetMapping("/user/add")
     public String addUser(@AuthenticationPrincipal UserDetails username, User bid) {
 
@@ -124,6 +132,7 @@ public class UserController {
      * @param model a request scoped object injected for us by spring and it's stores attributes.
      * @return the url which redirects and returns the web page with form to be updated
      */
+    @RolesAllowed("ADMIN")
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, Model model) {
 
@@ -131,7 +140,7 @@ public class UserController {
 
         if(user != null){
             user.setPassword("");
-            model.addAttribute("users", user);
+            model.addAttribute("user", user);
             log.info("Full name: " + user.getFullname() + ", " + "Username: " + user.getUsername() + ", " +
                     "Role name: " + user.getRole());
             return "user/update";
@@ -150,6 +159,7 @@ public class UserController {
      * @param model a request scoped object injected for us by spring and it's stores attributes.
      * @return the url which redirects and returns the updated user in the user list
      */
+    @RolesAllowed("ADMIN")
     @PostMapping("/user/update/{id}")
     public String updateUser(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, @Valid User user,
                              BindingResult result, Model model) {
@@ -158,14 +168,14 @@ public class UserController {
             return "user/update";
         }
 
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
+       /* BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));*/
         user.setId(id);
         userService.updateUser(user);
         model.addAttribute("users", userService.findAllUsers());
 
         log.info("Updated User: " + user.toString() +", "+
-                  "Updated time: " + LocalDate.now());
+                "Updated time: " + LocalDate.now());
         return "redirect:/user/list";
     }
 
@@ -178,6 +188,7 @@ public class UserController {
      * @param model a request scoped object injected for us by spring and it's stores attributes.
      * @return the url which redirects and returns the user list without the user that was deleted
      */
+    @RolesAllowed("ADMIN")
     @GetMapping("/user/delete/{id}")
     public String deleteUser(@AuthenticationPrincipal UserDetails username, @PathVariable("id") Integer id, Model model) {
         User userById = userService.findUserById(id);
@@ -197,3 +208,4 @@ public class UserController {
     }
 
 }
+

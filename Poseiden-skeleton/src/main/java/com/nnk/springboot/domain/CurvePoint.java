@@ -26,7 +26,6 @@ public class CurvePoint {
     Integer curveId;
 
     @CreationTimestamp
-    @FutureOrPresent
     @Column(name = "asOfDate")
     @DateTimeFormat(pattern="yyyy-MM-dd")
     LocalDate asOfDate;
@@ -64,11 +63,11 @@ public class CurvePoint {
         this.curveId = curveId;
     }
 
-    public @FutureOrPresent LocalDate getAsOfDate() {
+    public  LocalDate getAsOfDate() {
         return asOfDate;
     }
 
-    public void setAsOfDate(@FutureOrPresent LocalDate asOfDate) {
+    public void setAsOfDate( LocalDate asOfDate) {
         this.asOfDate = asOfDate;
     }
 

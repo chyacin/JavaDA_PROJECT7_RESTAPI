@@ -122,7 +122,7 @@ public class TradeController {
             return "trade/update";
         }
 
-        return "redirect::/trade/list";
+        return "redirect:/trade/list";
     }
 
     /**
