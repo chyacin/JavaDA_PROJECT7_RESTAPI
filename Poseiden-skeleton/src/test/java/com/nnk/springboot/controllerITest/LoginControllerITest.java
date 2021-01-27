@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllerIT;
+package com.nnk.springboot.controllerITest;
 
 
 import com.nnk.springboot.domain.User;
@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -18,11 +19,12 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@RunWith(SpringRunner.class)
+@AutoConfigureMockMvc
 @SpringBootTest()
-public class LoginControllerIT {
+@RunWith(SpringRunner.class)
+
+public class LoginControllerITest {
 
 
     private MockMvc mockMvc;
@@ -48,7 +50,7 @@ public class LoginControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void getAllUserArticles()throws Exception {
 
         User user = new User();
@@ -65,7 +67,7 @@ public class LoginControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void error() throws Exception{
 
         mockMvc.perform(get("/app/error"))

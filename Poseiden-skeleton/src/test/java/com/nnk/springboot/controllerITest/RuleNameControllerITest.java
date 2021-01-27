@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllerIT;
+package com.nnk.springboot.controllerITest;
 
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.services.RuleNameServiceImpl;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-public class RuleNameControllerIT {
+public class RuleNameControllerITest {
 
     private MockMvc mockMvc;
 
@@ -44,7 +44,7 @@ public class RuleNameControllerIT {
 
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void home()throws Exception{
 
         mockMvc.perform(get("/ruleName/list"))
@@ -53,7 +53,7 @@ public class RuleNameControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void addRuleForm()throws Exception {
 
         mockMvc.perform(get("/ruleName/add"))
@@ -61,7 +61,7 @@ public class RuleNameControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void validate()throws Exception {
 
         RuleName ruleName = new RuleName();
@@ -93,7 +93,7 @@ public class RuleNameControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void showUpdateForm()throws Exception {
 
         RuleName ruleName = new RuleName();
@@ -113,7 +113,7 @@ public class RuleNameControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void updateRule()throws Exception{
 
         RuleName ruleName = new RuleName();
@@ -145,7 +145,7 @@ public class RuleNameControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void deleteRule()throws Exception {
 
 
