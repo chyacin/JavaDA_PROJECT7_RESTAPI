@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllerIT;
+package com.nnk.springboot.controllerITest;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.services.UserServiceImpl;
@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-public class UserControllerIT {
+public class UserControllerITest {
 
     private MockMvc mockMvc;
 
@@ -41,7 +40,7 @@ public class UserControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void home()throws Exception {
 
         mockMvc.perform(get("/user/list"))
@@ -50,7 +49,7 @@ public class UserControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void addUserForm()throws Exception {
 
         mockMvc.perform(get("/user/add"))
@@ -58,7 +57,7 @@ public class UserControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void validate()throws Exception {
 
        // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -89,7 +88,7 @@ public class UserControllerIT {
 
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void deleteBid()throws Exception {
         User user = new User();
         user.setId(1);

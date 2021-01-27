@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllerIT;
+package com.nnk.springboot.controllerITest;
 
 
 import com.nnk.springboot.domain.CurvePoint;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-public class CurvePointControllerIT {
+public class CurvePointControllerITest {
 
     private MockMvc mockMvc;
 
@@ -45,7 +45,7 @@ public class CurvePointControllerIT {
 
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void home()throws Exception{
 
         mockMvc.perform(get("/curvePoint/list"))
@@ -54,7 +54,7 @@ public class CurvePointControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void addCurveForm()throws Exception {
 
         mockMvc.perform(get("/curvePoint/add"))
@@ -62,7 +62,7 @@ public class CurvePointControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void validate()throws Exception {
 
         CurvePoint curvePoint = new CurvePoint();
@@ -88,7 +88,7 @@ public class CurvePointControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void showUpdateForm()throws Exception {
 
         CurvePoint curvePoint = new CurvePoint();
@@ -107,7 +107,7 @@ public class CurvePointControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void updateCurve()throws Exception {
 
         CurvePoint curvePoint = new CurvePoint();
@@ -134,7 +134,7 @@ public class CurvePointControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void deleteCurve()throws Exception {
 
         CurvePoint curvePoint = new CurvePoint();

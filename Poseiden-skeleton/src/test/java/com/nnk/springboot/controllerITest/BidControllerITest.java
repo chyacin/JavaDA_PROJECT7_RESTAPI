@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllerIT;
+package com.nnk.springboot.controllerITest;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.services.BidListServiceImpl;
@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-public class BidControllerIT {
+public class BidControllerITest {
 
     private MockMvc mockMvc;
 
@@ -44,7 +44,7 @@ public class BidControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void home()throws Exception {
 
         mockMvc.perform(get("/bidList/list"))
@@ -54,7 +54,7 @@ public class BidControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void addBidForm()throws Exception {
 
         mockMvc.perform(get("/bidList/add"))
@@ -62,7 +62,7 @@ public class BidControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void validate()throws Exception {
 
         BidList bidList = new BidList();
@@ -89,7 +89,7 @@ public class BidControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void showUpdateForm()throws Exception {
 
         BidList bidList = new BidList();
@@ -107,7 +107,7 @@ public class BidControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void updateBid()throws Exception{
 
         BidList bidList = new BidList();
@@ -134,7 +134,7 @@ public class BidControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void deleteBid()throws Exception {
 
         BidList bidList = new BidList();

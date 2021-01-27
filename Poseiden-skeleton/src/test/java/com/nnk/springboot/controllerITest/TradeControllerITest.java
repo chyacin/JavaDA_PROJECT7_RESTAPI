@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllerIT;
+package com.nnk.springboot.controllerITest;
 
 
 import com.nnk.springboot.domain.Trade;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-public class TradeControllerIT {
+public class TradeControllerITest {
 
     private MockMvc mockMvc;
 
@@ -45,7 +45,7 @@ public class TradeControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void home()throws Exception {
 
         mockMvc.perform(get("/trade/list"))
@@ -54,7 +54,7 @@ public class TradeControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void addTradeForm()throws Exception {
 
         mockMvc.perform(get("/trade/add"))
@@ -63,7 +63,7 @@ public class TradeControllerIT {
 
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void validate()throws Exception{
 
         Trade trade = new Trade();
@@ -88,7 +88,7 @@ public class TradeControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void showUpdateForm()throws Exception {
 
         Trade trade = new Trade();
@@ -106,7 +106,7 @@ public class TradeControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void updateBid()throws Exception{
 
         Trade trade = new Trade();
@@ -132,7 +132,7 @@ public class TradeControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void deleteBid()throws Exception {
 
         Trade trade = new Trade();

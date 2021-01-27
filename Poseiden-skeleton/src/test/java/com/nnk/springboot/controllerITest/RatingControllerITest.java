@@ -1,8 +1,7 @@
-package com.nnk.springboot.controllerIT;
+package com.nnk.springboot.controllerITest;
 
 
 import com.nnk.springboot.domain.Rating;
-import com.nnk.springboot.services.RatingService;
 import com.nnk.springboot.services.RatingServiceImpl;
 import com.nnk.springboot.services.UserServiceImpl;
 import org.junit.Before;
@@ -24,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-public class RatingControllerIT {
+public class RatingControllerITest {
 
     private MockMvc mockMvc;
 
@@ -45,7 +44,7 @@ public class RatingControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void home()throws Exception {
 
         mockMvc.perform(get("/rating/list"))
@@ -54,7 +53,7 @@ public class RatingControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void addRatingForm()throws Exception {
 
         mockMvc.perform(get("/rating/add"))
@@ -62,7 +61,7 @@ public class RatingControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void validate()throws Exception {
 
         Rating rating = new Rating();
@@ -92,7 +91,7 @@ public class RatingControllerIT {
 
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void showUpdateForm()throws Exception {
 
         Rating rating = new Rating();
@@ -111,7 +110,7 @@ public class RatingControllerIT {
 
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void updateRating()throws Exception {
 
         Rating rating = new Rating();
@@ -141,7 +140,7 @@ public class RatingControllerIT {
 
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void deleteRating()throws Exception {
 
         Rating rating = new Rating();

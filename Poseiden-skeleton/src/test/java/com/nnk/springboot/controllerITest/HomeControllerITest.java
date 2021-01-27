@@ -1,4 +1,4 @@
-package com.nnk.springboot.controllerIT;
+package com.nnk.springboot.controllerITest;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()
-public class HomeControllerIT {
+public class HomeControllerITest {
 
     private MockMvc mockMvc;
 
@@ -32,7 +32,7 @@ public class HomeControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void home()throws Exception {
 
         mockMvc.perform(get("/"))
@@ -41,7 +41,7 @@ public class HomeControllerIT {
     }
 
     @Test
-    @WithUserDetails("admin")
+    @WithUserDetails("adminOne")
     public void adminHome()throws Exception {
 
         mockMvc.perform(get("/admin/home"))
